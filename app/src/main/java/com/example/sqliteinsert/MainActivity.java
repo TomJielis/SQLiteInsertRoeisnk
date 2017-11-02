@@ -17,11 +17,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
-        Name= (EditText) findViewById(R.id.editText);
-        Pass= (EditText) findViewById(R.id.editText2);
+        Name= (EditText) findViewById(R.id.editName);
+        Pass= (EditText) findViewById(R.id.editPass);
         helper = new myDbAdapter(this);
 
-        Button adduser =(Button)findViewById(R.id.btnAddUser);
+        Button adduser =(Button)findViewById(R.id.button);
 
         adduser.setOnClickListener(new View.OnClickListener() {
             @Override
