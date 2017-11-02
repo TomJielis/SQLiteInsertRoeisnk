@@ -22,6 +22,9 @@ public  class UserContract {
             public final static String USER_NAME = "UserName";
             public final static String USER_PWD = "Password";
 
+
+
+
         }
 
 
