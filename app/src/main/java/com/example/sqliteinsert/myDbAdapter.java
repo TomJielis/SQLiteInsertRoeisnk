@@ -2,6 +2,9 @@ package com.example.sqliteinsert;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.DataSetObservable;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -19,9 +22,30 @@ public class myDbAdapter {
         ContentValues contentValues = new ContentValues();
         contentValues.put(UserContract.Contract.UserEntity.USER_NAME, name);
         contentValues.put(UserContract.Contract.UserEntity.USER_PWD, password);
-        long id = db.insert(UserContract.Contract.DATABASE_NAME, null, contentValues);
+        long id = db.insert(UserContract.Contract.UserEntity.TABLE_NAME, null, contentValues);
         return id;
     }
+
+    public Cursor getData(){
+        SQLiteDatabase db =  helper.getWritableDatabase();
+        String query = "SELECT * FROM " + UserContract.Contract.UserEntity.TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+
+    public void updateUser(String oldUser , String NewUser){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String Query = "Update "+ UserContract.Contract.UserEntity.TABLE_NAME + " set " + UserContract.Contract.UserEntity.USER_NAME + " = '" + NewUser + "' where "+ UserContract.Contract.UserEntity.USER_NAME  + " = " + "'" + oldUser + "'";
+        db.execSQL(Query);
+    }
+
+    public void deleteUser(String username){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String Query = "DELETE FROM "+ UserContract.Contract.UserEntity.TABLE_NAME + " where "+ UserContract.Contract.UserEntity.USER_NAME  + " = " + "'" + username + "'";
+        db.execSQL(Query);
+    }
+
 
     static class myDbHelper extends SQLiteOpenHelper {
         private static final String CREATE_TABLE = "CREATE TABLE " + UserContract.Contract.UserEntity.TABLE_NAME +
@@ -56,6 +80,8 @@ public class myDbAdapter {
                 Message.message(context, "" + e);
             }
         }
+
+
     }
 
 }
